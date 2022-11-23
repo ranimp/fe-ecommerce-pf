@@ -6,8 +6,6 @@ import iniloading from "../images/loading.gif"
 export default function Product(){
   const [product, setProduct] = useState ([])
   const [loading, setLoading] = useState(false)
-  const [currentPage, setCurrentPage] = useState(1)
-  const [postsPerPage] = useState(10)
   const [filter, setFilter] = useState([])
   const [search, setSearch] = useState('')
   const [sortType, setSortType] = useState('')
@@ -54,25 +52,22 @@ export default function Product(){
     }
     sortArray(sortType);
   }, [sortType]); 
-  
-  // pagination
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = filter?.slice(indexOfFirstPost, indexOfLastPost);
-  console.log(currentPosts)
-  const paginate = (pageNumber) => setCurrentPage(pageNumber)
+
 
   // search func
   const changeHandler = (event) => {
     setSearch(event.target.value);
   };
-  const debouncedChangeHandler = useMemo(
-    () => debounce(changeHandler, 300)
-  , []);
+
+  const debouncedChangeHandler = useMemo(() => debounce(changeHandler, 300), []);
+
   if (search !== '') {
-    listToDisplay = product.filter((product) => product?.name.toLowerCase()
+    listToDisplay = filter?.filter((product) => product?.title.toLowerCase()
       .includes(search.toLowerCase()));
   }
+  useEffect(() => () => {
+    debouncedChangeHandler.cancel();
+  });
 
   // filter category func
   const filterProduct = (cat) => {
@@ -93,14 +88,11 @@ export default function Product(){
   return(
     <div>
       {loading ? <Loading /> : <ShowProducts filterProduct = {filterProduct} 
-        debouncedChangeHandler = {debouncedChangeHandler}
-        currentPosts = {currentPosts}
+        debounced = {debouncedChangeHandler}
+        currentPosts = {listToDisplay}
         product = {listToDisplay}
         setSortType = {setSortType} 
         search = {search}
-        postsPerPage = {postsPerPage}
-        paginate = {paginate}
-        currentPage = {currentPage}
       />}
     </div>
   )

@@ -1,20 +1,16 @@
 import { useState } from "react";
 import StarIcon from "../icons/StarIcon";
-import Pagination from "./Pagination";
 import Button from "./Button";
 import { Link } from 'react-router-dom';
 import { SearchHome } from "./Search";
 
 export default function Card({
   filterProduct, 
-  debouncedChangeHandler, 
+  debounced, 
   currentPosts, 
   product, 
   setSortType, 
-  search,
-  postsPerPage,
-  paginate,
-  currentPage}){
+  search}){
   const [filter, setFilter] = useState(product)
   return (
     <div className="font-poppins container mx-auto px-5 text-sm lg:text-base">
@@ -36,11 +32,11 @@ export default function Card({
         <option value="rating" className="text-sm">Rating</option>
         </select>
         <div className = "hidden md:block">
-          <SearchHome onChange = {debouncedChangeHandler}/>
+          <SearchHome onChange = {debounced}/>
         </div>
       </div>
       <div className = "flex justify-center mt-3 md:hidden ">
-        <SearchHome onChange = {debouncedChangeHandler}/>
+        <SearchHome onChange = {debounced}/>
       </div>
       <div className="w-full">
       <section className="max-w-5x mx-5 lg:mx-12 my-8 transition-shadow">
@@ -70,14 +66,6 @@ export default function Card({
           }               
         </div>
       </section>
-      <div className="container mx-auto flex justify-center px-5 lg:px-0">
-        <Pagination
-        postsPerPage={postsPerPage}
-        totalPosts={filter.length}
-        paginate={paginate}
-        currentPage={currentPage}
-        />
-      </div>
       </div>
     </div>
   )
