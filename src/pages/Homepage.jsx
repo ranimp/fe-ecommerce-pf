@@ -4,7 +4,7 @@ import gambar from "../images/gbr.gif"
 import Footer from "../layouts/Footer";
 import NavbarHome from "../layouts/NavbarHome"
 import NavbarHomeLogin from "../layouts/NavbarHomeLogin"
-import Card from "../components/Card"
+import Product from "../layouts/product"
 import { Link } from "react-router-dom";
 
 export default function Homepage() {
@@ -66,9 +66,9 @@ export default function Homepage() {
           </div>
         </div>
       </div>
-      {/* section cards */}
+      {/* section products */}
       <div data-aos="fade-up" data-aos-duration="1500">
-        <Card/>
+        <Product />
       </div>
       {/* section footer */}
       <Footer/>

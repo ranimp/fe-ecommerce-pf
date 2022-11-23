@@ -9,7 +9,6 @@ import { Redirect } from "react-router";
 export default function LoginPage() {
   const [values, setValues] = useState({
     email: "",
-    password: "",
   });
 
   const [listUser, setListUser] = useState([])
@@ -27,7 +26,7 @@ export default function LoginPage() {
   const handleFormSubmit = (event) => {
     event.preventDefault();
     listUser.forEach(user => {
-      if (user.email === values.email && user.password === values.password && user.email.length >= 1) {
+      if (user.email === values.email && user.email.length >= 1) {
         setIsLogged(true)
         localStorage.setItem("credential", JSON.stringify(user))
         console.log("berhasil")
@@ -40,7 +39,7 @@ export default function LoginPage() {
   }
 
   useEffect(() => {
-    fetch("https://pickled-capricious-beak.glitch.me/user")
+    fetch("https://jsonplaceholder.typicode.com/users")
       .then(response => response.json())
       .then(data => setListUser(data))
       .catch(err => console.log(err))
@@ -93,7 +92,7 @@ export default function LoginPage() {
                       type="password"
                       name="password"
                       className=" input text-xs w-full p-2 border border-gray-300 rounded mt-1 hover:border-blue-600"
-                      value={values.password}
+                      // value={values.password}
                       onChange={handleChange}
                       placeholder="Enter Your Password"
                     ></input>

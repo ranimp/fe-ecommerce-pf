@@ -17,7 +17,7 @@ export default function NavbarHome({ fixed }) {
     const loggedInUser = localStorage.getItem("credential");
     if(loggedInUser) {
       const foundUser = JSON.parse(loggedInUser);
-      setUserName(foundUser?.name?.split('').slice(0, 1))
+      setUserName(foundUser?.name?.split(' ').slice(0, 1))
     }
   }, []);
 
