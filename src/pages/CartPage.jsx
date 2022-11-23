@@ -96,12 +96,15 @@ export default function Cart(){
           {/* map disini */}
           <div className="grid grid-cols-1 md:grid-cols-4 mt-8">
             <div className="col-span-1">
-              <img className="h-40 lg:h-72 mx-auto" src={product.image_url} alt="gambar"></img>
+              <img className="h-40 lg:h-72 mx-auto" src={product.thumbnail} alt="gambar"></img>
             </div>
             <div className="col-span-3 md:ml-12">
-              <h3 className="font-bold text-sm md:text-xl lg:mt-12">{product.name}</h3>
+              <h3 className="font-bold text-sm md:text-xl lg:mt-12">{product.title}</h3>
               <div className="my-2 capitalize">stock : {product.stock}</div>
-              <p className="mb-2 text-sm md:text-base">Rp {new Intl.NumberFormat(['ban', 'id']).format(product.price)}</p>
+              <p className="mb-2 text-sm md:text-base">$ 
+              {/* {new Intl.NumberFormat(['ban', 'id']).format(product.price)} */}
+              {product.price}
+              </p>
               <div className="inline-block">
                 <IncDec onClick={()=>handleDel(product)}>-</IncDec>
               </div>
@@ -122,7 +125,7 @@ export default function Cart(){
 
   const total = () => {
     return (
-      <p className="flex flex-row-reverse mt-8 font-semibold text-base md:text-xl text-3F70F9"> Total : Rp {new Intl.NumberFormat(['ban', 'id']).format(amount)} </p>
+      <p className="flex flex-row-reverse mt-8 font-semibold text-base md:text-xl text-3F70F9"> Total : ${amount} </p>
     )
   }
 
@@ -151,7 +154,7 @@ export default function Cart(){
       <div data-aos="fade-right" data-aos-duration="1500">
       {state.length !== 0 && state.map(cartItems)} 
       </div>
-      <div data-aos="fade-left" data-aos-duration="1500">
+      <div>
       {state.length !== 0 && total()}
       {state.length !== 0 && buttons()}
       </div>

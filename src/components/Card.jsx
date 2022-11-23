@@ -50,14 +50,16 @@ export default function Card({
               return (
                 <div className="w-full white shadow-lg rounded-lg overflow-hidden flex flex-col justify-center transition duration-500 ease-in-out hover:shadow-gray-800 transform hover:-translate-y-1 hover:scale-110" key={product.id}>
                   <div>
-                    <img className="object-scale-down h-auto max-h-32 w-full" src={product.image_url} alt="gambar"/>
+                    <img className="object-scale-down h-auto max-h-32 w-full" src={product.thumbnail} alt="gambar"/>
                   </div>
                   <div className="py-4 sm:py-6 px-3">
-                    <p className="text-left md:text-center text-sm sm:text-base text-gray font-semibold mb-2 sm:h-12 max-h-16 line-clamp-2 flex items-center">{product.name}</p>
+                    <p className="text-left md:text-center text-sm sm:text-base text-gray font-semibold mb-2 sm:h-12 max-h-16 line-clamp-2 flex items-center">{product.title}</p>
                     <p className="text-left hidden sm:block text-xs sm:text-base font-normal">Stock: {product.stock}</p>
                     <p className="text-left text-xs sm:text-base font-normal "><StarIcon/>{product.rating}</p>
-                    <p className="text-left text-xs sm:text-base font-normal">Rp {
-                    new Intl.NumberFormat(['ban', 'id']).format(product.price)}</p>
+                    <p className="text-left text-xs sm:text-base font-normal">$ 
+                    {/* {new Intl.NumberFormat(['ban', 'id']).format(product.price)} */}
+                    {product.price}
+                    </p>
                     <Link className="mt-2 sm:my-2 text-xs sm:text-base" to={`/detailproduct/${product.id}`}>
                       <Button type="cardBuy" def="default">Detail</Button>
                     </Link>

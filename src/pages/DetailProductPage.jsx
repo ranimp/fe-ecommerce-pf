@@ -31,10 +31,19 @@ export default function DetailProduct(){
   }
 
   useEffect(() => {
-    fetch("https://pickled-capricious-beak.glitch.me/products")
-    .then(response => response.json())
-    .then(data => setProduct(data.find(product => product.id === Number(id))))
-    .catch(err => console.log(err))
+    const dataFetch = async () => {
+      const data = await (
+        await fetch(
+          `https://dummyjson.com/products/${id}`
+        )
+      ).json();
+
+      // set state when the data received
+      setProduct(data);
+      console.log(product)
+    };
+
+    dataFetch();
   },[product])
 
   let { id } = useParams();
@@ -49,13 +58,16 @@ export default function DetailProduct(){
           {/* section 1 */}
           <div className="grid grid-cols-1 lg:grid-cols-2">
             <div className="lg:col-span-1" data-aos="fade-right" data-aos-duration="1500">
-              <img className="lg:w-10/12 py-6" src={product.image_url} alt="gambar"></img>
+              <img className="lg:w-10/12 py-6" src={product?.thumbnail} alt="gambar"></img>
             </div>
             <div className="lg:col-span-1" data-aos="fade-left" data-aos-duration="1500">
-              <h3 className="font-extrabold text-xl lg:text-2xl lg:mt-28">{product.name}</h3>
-              <div className="my-2 capitalize">stock : {product.stock}</div>
-              <div className="my-2"><StarIcon/>{product.rating}</div>
-              <p className="mb-6 font-bold text-lg lg:xl">Rp {new Intl.NumberFormat(['ban', 'id']).format(product.price)}</p>
+              <h3 className="font-extrabold text-xl lg:text-2xl lg:mt-28">{product?.title}</h3>
+              <div className="my-2 capitalize">stock : {product?.stock}</div>
+              <div className="my-2"><StarIcon/>{product?.rating}</div>
+              <p className="mb-6 font-bold text-lg lg:xl">$ 
+              {/* {new Intl.NumberFormat(['ban', 'id']).format(product.price)} */}
+              {product?.price}
+              </p>
               <div className="inline-block capitalize mb-12">
                 <Button def="def" type="detailAdd" onClick={() => addProduct(product)}>add to cart</Button>
               </div>
@@ -67,8 +79,8 @@ export default function DetailProduct(){
 
           {/* section 2 */}
           <div data-aos="fade-up" data-aos-duration="1500">
-            <h3 className="text-base lg:text-xl font-semibold">{product.name}</h3><br></br>
-            <p className="whitespace-pre-line align-bottom">{product.desc}</p>
+            <h3 className="text-base lg:text-xl font-semibold">{product?.title}</h3><br></br>
+            <p className="whitespace-pre-line align-bottom">{product?.description}</p>
           </div>
         </div>
 

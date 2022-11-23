@@ -8,7 +8,7 @@ export default function Product(){
   const [loading, setLoading] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const [postsPerPage] = useState(10)
-  const [filter, setFilter] = useState(product)
+  const [filter, setFilter] = useState([])
   const [search, setSearch] = useState('')
   const [sortType, setSortType] = useState('')
   let listToDisplay = product
@@ -18,10 +18,12 @@ export default function Product(){
   useEffect(() => {
     const getProducts = async () => {
       setLoading(true)
-      const response = await fetch("https://pickled-capricious-beak.glitch.me/products")
+      const response = await (
+        await fetch("https://dummyjson.com/products")
+        ).json()
       if(componentMounted) {
-        setProduct(await response.clone().json())
-        setFilter(await response.json())
+        setProduct(response.products)
+        setFilter(response.products)
         setLoading(false)
       }
       return () => {
@@ -56,7 +58,8 @@ export default function Product(){
   // pagination
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = filter.slice(indexOfFirstPost, indexOfLastPost);
+  const currentPosts = filter?.slice(indexOfFirstPost, indexOfLastPost);
+  console.log(currentPosts)
   const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
   // search func
@@ -91,8 +94,8 @@ export default function Product(){
     <div>
       {loading ? <Loading /> : <ShowProducts filterProduct = {filterProduct} 
         debouncedChangeHandler = {debouncedChangeHandler}
-        currentPosts = {listToDisplay}
-        product = {product}
+        currentPosts = {currentPosts}
+        product = {listToDisplay}
         setSortType = {setSortType} 
         search = {search}
         postsPerPage = {postsPerPage}
