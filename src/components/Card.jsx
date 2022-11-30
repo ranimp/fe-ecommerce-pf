@@ -3,6 +3,9 @@ import StarIcon from "../icons/StarIcon";
 import Button from "./Button";
 import { Link } from 'react-router-dom';
 import { SearchHome } from "./Search";
+import { useDispatch } from 'react-redux';
+import { addCart } from './../redux/action/index';
+import formatRupiah from './FormatRupiah';
 
 export default function Card({
   filterProduct, 
@@ -11,7 +14,14 @@ export default function Card({
   product, 
   setSortType, 
   search}){
+
   const [filter, setFilter] = useState(product)
+  const dispatch = useDispatch()
+  const addProduct = (product) => {
+    dispatch(addCart(product))
+    alert('Berhasil menambahkan ' + product.title)
+  }
+
   return (
     <div className="font-poppins container mx-auto px-5 text-sm lg:text-base">
       <div className="flex md:justify-center gap-4 overflow-x-auto">
@@ -52,13 +62,15 @@ export default function Card({
                     <p className="text-left md:text-center text-sm sm:text-base text-gray font-semibold mb-2 sm:h-12 max-h-16 line-clamp-2 flex items-center">{product.title}</p>
                     <p className="text-left hidden sm:block text-xs sm:text-base font-normal">Stock: {product.stock}</p>
                     <p className="text-left text-xs sm:text-base font-normal "><StarIcon/>{product.rating}</p>
-                    <p className="text-left text-xs sm:text-base font-normal">$ 
-                    {/* {new Intl.NumberFormat(['ban', 'id']).format(product.price)} */}
-                    {product.price}
+                    <p className="text-left text-xs sm:text-base font-normal"> 
+                    Rp{formatRupiah(product.price)}
                     </p>
                     <Link className="mt-2 sm:my-2 text-xs sm:text-base" to={`/detailproduct/${product.id}`}>
                       <Button type="cardBuy" def="default">Detail</Button>
                     </Link>
+                    <div className="mt-2">
+                      <Button def="def" type="detailAdd" onClick={() => addProduct(product)}>add to cart</Button>
+                    </div>
                   </div>
                 </div> 
               )
